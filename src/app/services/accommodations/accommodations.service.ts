@@ -17,4 +17,10 @@ export class AccommodationsService {
       `${this.hostname}/accommodations/prices`
     );
   }
+
+  public getAccommodation(id: string): Observable<AccommodationsDTO> {
+    return this.httpClient.get<AccommodationsDTO>(
+      `${this.hostname}/accommodations/prices/${id}`
+    );
+  }
 }

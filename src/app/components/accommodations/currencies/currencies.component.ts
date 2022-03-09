@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs';
+import { RateDTO } from 'src/app/models/currencies/rate.model';
 import { CurrenciesService } from 'src/app/services/accommodations/currencies.service';
 
 @Component({
@@ -9,10 +10,10 @@ import { CurrenciesService } from 'src/app/services/accommodations/currencies.se
   styleUrls: ['./currencies.component.scss'],
 })
 export class CurrenciesComponent implements OnInit {
-  @Output() selectedCurrenciesEvent = new EventEmitter<Array<string>>();
+  @Output() selectedCurrenciesEvent = new EventEmitter<Array<RateDTO>>();
 
   public isLoading!: boolean;
-  public currencies!: Array<string>;
+  public currencies!: Array<RateDTO>;
   public currenciesForm!: FormGroup;
 
   constructor(
@@ -36,7 +37,7 @@ export class CurrenciesComponent implements OnInit {
   private listenToChanges(): void {
     this.currenciesForm
       .get('currencies')!
-      .valueChanges.subscribe((selectedCurrencies: Array<string>) => {
+      .valueChanges.subscribe((selectedCurrencies: Array<RateDTO>) => {
         this.selectedCurrenciesEvent.emit(selectedCurrencies);
       });
   }
@@ -47,7 +48,13 @@ export class CurrenciesComponent implements OnInit {
       .getCurrencies()
       .pipe(take(1))
       .subscribe((currencies: any) => {
-        this.currencies = Object.keys(currencies.rates);
+        this.currencies = new Array<RateDTO>();
+        for (const key in currencies.rates) {
+          let rate: RateDTO = new RateDTO();
+          rate.currency = key;
+          rate.value = currencies.rates[key];
+          this.currencies.push(rate);
+        }
         this.isLoading = false;
       });
   }

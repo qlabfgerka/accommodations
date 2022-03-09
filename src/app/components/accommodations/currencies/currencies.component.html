@@ -4,7 +4,7 @@
       <mat-label>Currencies</mat-label>
       <mat-select multiple formControlName="currencies">
         <mat-option *ngFor="let currency of currencies" [value]="currency">{{
-          currency
+          currency.currency
         }}</mat-option>
       </mat-select>
     </mat-form-field>

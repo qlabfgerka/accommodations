@@ -2,9 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AccommodationsDTO } from 'src/app/models/accommodations/accommodations.model';
+import { RateDTO } from 'src/app/models/currencies/rate.model';
 import { AccommodationsService } from 'src/app/services/accommodations/accommodations.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-accommodations',
@@ -15,7 +18,7 @@ export class AccommodationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  public selectedCurrencies!: Array<string>;
+  public selectedCurrencies!: Array<RateDTO>;
   public accommodations!: Array<AccommodationsDTO>;
   public isLoading!: boolean;
   public dataSource!: MatTableDataSource<AccommodationsDTO>;
@@ -29,21 +32,31 @@ export class AccommodationsComponent implements OnInit {
     'country',
   ];
 
-  constructor(private readonly accommodationsService: AccommodationsService) {}
+  constructor(
+    private readonly accommodationsService: AccommodationsService,
+    private readonly dataService: DataService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.refresh();
+  }
+
+  public openAccommodation(accommodation: AccommodationsDTO): void {
+    this.dataService.accommodation = accommodation;
+    this.router.navigate([`/accommodations/${accommodation.id}`]);
   }
 
   public expandTable(): void {
     this.expanded = !this.expanded;
   }
 
-  public handleCurrencies(selectedCurrencies: Array<string>): void {
+  public handleCurrencies(selectedCurrencies: Array<RateDTO>): void {
+    this.dataService.selectedCurrencies = selectedCurrencies;
     this.selectedCurrencies = selectedCurrencies;
   }
 
-  public applyFilter(event: Event) {
+  public applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -96,7 +109,11 @@ export class AccommodationsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  private compare(a: number | string, b: number | string, isAsc: boolean) {
+  private compare(
+    a: number | string,
+    b: number | string,
+    isAsc: boolean
+  ): number {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
