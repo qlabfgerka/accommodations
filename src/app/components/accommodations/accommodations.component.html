@@ -1,5 +1,7 @@
 <div class="flexbox">
-  <app-currencies></app-currencies>
+  <app-currencies
+    (selectedCurrenciesEvent)="handleCurrencies($event)"
+  ></app-currencies>
   <div class="break"></div>
   <p>accommodations works!</p>
 </div>

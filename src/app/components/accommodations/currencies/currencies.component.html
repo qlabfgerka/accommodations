@@ -1,1 +1,12 @@
-<p>currencies works!</p>
+<div *ngIf="!isLoading" class="margin-top">
+  <form [formGroup]="currenciesForm" *ngIf="currenciesForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Currencies</mat-label>
+      <mat-select multiple formControlName="currencies">
+        <mat-option *ngFor="let currency of currencies" [value]="currency">{{
+          currency
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
