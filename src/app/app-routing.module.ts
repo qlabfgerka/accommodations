@@ -3,11 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: ``,
+    path: `accommodations`,
     loadChildren: () =>
       import('./components/accommodations/accommodations.module').then(
         (m) => m.AccommodationsModule
       ),
+  },
+  {
+    path: '**',
+    redirectTo: `/accommodations`,
   },
 ];
 

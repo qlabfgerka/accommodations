@@ -1,0 +1,26 @@
+<div class="flexbox margin-top" *ngIf="accommodation">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>{{ accommodation.name }}</mat-card-title>
+      <mat-card-subtitle
+        >{{ accommodation.address }}, {{ accommodation.city }},
+        {{ accommodation.country }}</mat-card-subtitle
+      ><mat-card-subtitle>
+        CREATED: {{ accommodation.createdAt | date }}</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-card-content>
+      <p>AVAILABLE: {{ accommodation.avaliable ? "YES" : "NO" }}</p>
+      <br />
+      <p>PRICES:</p>
+
+      <p>{{ accommodation.priceInEur }}<span class="unit">€</span></p>
+      <div *ngFor="let currency of selectedCurrencies">
+        <p>
+          {{ calculateRate(+currency.value!, +accommodation.priceInEur!) }}
+          <span class="unit">{{ currency.currency }}</span>
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
