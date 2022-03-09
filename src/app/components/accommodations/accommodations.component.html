@@ -5,10 +5,7 @@
 
   <div class="break"></div>
 
-  <div
-    class="wide"
-    *ngIf="selectedCurrencies && selectedCurrencies.length > 0 && !isLoading"
-  >
+  <div class="wide">
     <div class="aside">
       <mat-form-field appearance="standard">
         <mat-label>Filter</mat-label>
@@ -31,6 +28,9 @@
         [dataSource]="dataSource"
         matSort
         (matSortChange)="sortData($event)"
+        *ngIf="
+          selectedCurrencies && selectedCurrencies.length > 0 && !isLoading
+        "
       >
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>

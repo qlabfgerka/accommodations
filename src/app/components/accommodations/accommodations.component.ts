@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { DataService } from 'src/app/services/data/data.service';
   templateUrl: './accommodations.component.html',
   styleUrls: ['./accommodations.component.scss'],
 })
-export class AccommodationsComponent implements OnInit {
+export class AccommodationsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -38,7 +38,7 @@ export class AccommodationsComponent implements OnInit {
     private readonly router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.refresh();
   }
 
