@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DataGuard } from 'src/app/guards/data/data.guard';
 import { AccommodationsComponent } from './accommodations.component';
 
 const routes: Routes = [
@@ -10,6 +11,7 @@ const routes: Routes = [
       import('./accommodation/accommodation.module').then(
         (m) => m.AccommodationModule
       ),
+    canActivate: [DataGuard],
   },
 ];
 
