@@ -1,0 +1,11 @@
+.flexbox {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.break {
+  height: 0;
+  flex-basis: 100%;
+  margin-bottom: 10px;
+}
